@@ -43,11 +43,16 @@ gulp.task('sass', function() {
 	.pipe(browserSync.reload({stream: true}));
 });
 
+gulp.task('code', function() {
+	return gulp.src('app/*.html')
+	.pipe(browserSync.reload({ stream: true }))
+});
+
 // GULP 4 Синтаксис
 gulp.task('watch', function() {
 	gulp.watch('app/sass/**/*.sass', gulp.parallel('sass'));
 	gulp.watch(['libs/**/*.js', 'app/js/common.js'], gulp.parallel('js'));
-	gulp.watch('app/*.html', browserSync.reload);
+	gulp.watch('app/*.html', gulp.parallel('code'));
 });
 
 gulp.task('default', gulp.parallel('watch', 'sass', 'js', 'browser-sync'));
